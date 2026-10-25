@@ -23,15 +23,16 @@ Este historial diferencia **simulación/estructura** de **PASS funcional en VICE
 | TEST17 | Abrir filtro BGFONT para SEQ | RAM CHECK FAILED: checksum de BGFONT no actualizado | FAIL de verificación |
 | TEST18 | Actualizar XOR/SUM y conservar filtro amplio | Ambos BB6 aparecen incluso como $81; también salen sprites/otros SEQ | **PASS de listado ampliado**, NO de carga general |
 | TEST19 | Filtro por $81 / $A1 / $B1 con helper en $C7E0 | Tras acceder a disquetera desde DIR, abandona BGFONT y vuelve a BASIC (captura 25/10) | **FAIL funcional en VICE** | 
-| TEST20 | Filtro reubicado a $033C; instalado antes de arrancar BGFONT, base TEST18 | Verificados checksums, 64 bancos y copia mediante simulación de ruta; sin prueba real en VICE | **PENDIENTE VICE** |
+| TEST20 | Filtro reubicado a $033C; instalado antes de arrancar BGFONT, base TEST18 | El editor activa la disquetera y regresa a READY durante DIR (captura 25/10) | **FAIL funcional en VICE** |
+| TEST21 | Filtro inline de 11 bytes en $32E6: EOR #$56, CMP #$D7, BCC; sin helpers | Pass estructural sobre TEST18, simulado con A/B/C; aún no probado realmente | **PENDIENTE VICE** |
 
 ## PASS que debemos preservar
 - **TEST13**: cartucho de cuatro opciones con EPYX BASIC desde ROM y SPRITE sin portada. No sustituirlo por tests experimentales.
 - **TEST16**: tres D64 de clasificación controlada con volúmenes diferentes; útiles para regresión.
 - **TEST18**: primera ampliación de BGFONT que demuestra visibilidad de SEQ normales. Mantener como referencia si TEST19 falla.
 
-## Resultado TEST19 y criterios para TEST20
-1. Reiniciar VICE completamente con el CRT de TEST20.
+## Resultado TEST19/20 y criterios para TEST21
+1. Reiniciar VICE completamente con el CRT de TEST21.
 2. Opción 1 debe seguir iniciando EPYX BASIC (regresión).
 3. Opción 2 debe iniciar BGFONT sin RAM CHECK FAILED ni JAM.
 4. Con **T16-B-NORMAL**, DIR debe mostrar BB6TEST.SEQ y BB6TEST.FONT.
@@ -39,10 +40,11 @@ Este historial diferencia **simulación/estructura** de **PASS funcional en VICE
 6. Repetir con **T16-A-EPYX** para comprobar compatibilidad hacia atrás.
 7. **No escribir ni sobrescribir** archivos hasta validar carga/guardado y cabeceras.
 8. Guardar capturas y el primer mensaje de error o dirección JAM si la prueba falla.
-9. Si vuelve a BASIC durante DIR, verificar en monitor si los 22 bytes en $033C siguen presentes antes/después de acceder al disco.
+9. Si vuelve a BASIC durante DIR, anotar la dirección o comportamiento; TEST21 no utiliza código en $033C ni $C7E0.
+10. El filtro inline es intencionalmente limitado: algunas clases especiales $A2/$B2 podrían mostrarse; NO confundir esto con validación de cabecera TX/CH.
 
 ## Pruebas aún no demostradas
-- Que TEST20 filtre correctamente en VICE y que el helper de $033C sobreviva a inicialización y lectura del disco. TEST19 falló en VICE.
+- Que TEST21 filtre correctamente en VICE, sin depender de código auxiliar. TEST19 y TEST20 fallaron en VICE.
 - Que un SEQ $81 arbitrario con contenido incompatible sea rechazado por TX/CH (no implementado).
 - Que SAVE/LOAD sean fiables en discos recién formateados y que no generen *PRG.
 - Que SPRITE acepte y guarde recursos estándar de forma interoperable.

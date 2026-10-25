@@ -12,7 +12,9 @@
 - [x] A/B/C demuestra filtro de tipos de directorio.
 - [x] TEST18 demuestra visibilidad de SEQ $81 en BGFONT.
 - [x] **TEST19 en VICE: FAIL**; vuelve a BASIC al leer el directorio (sin PASS).
-- [ ] **TEST20 en VICE:** arranque, DIR con $81/$A1/$B1 visible y $91/$82 oculto, sin salir a BASIC.
+- [x] **TEST20 en VICE: FAIL**; al acceder al directorio vuelve a BASIC.
+- [ ] **TEST21 en VICE:** prueba de filtro inline desde TEST18. Confirmar $81/$A1/$B1 visibles y $91/$82 ocultos sin salir a BASIC.
+- [ ] Validación posterior por cabeceras TX/CH: TEST21 podría admitir clases especiales $A2/$B2.
 - [ ] Cargar sin corrupción BB6TEST.SEQ y BB6TEST.FONT desde D64 estándar.
 - [ ] Clasificar archivos estándar por cabeceras TX/CH para no mostrar sprites/otros SEQ.
 - [ ] Opcional: modo ALL FILES, claramente separado del filtro seguro.

@@ -55,3 +55,10 @@ TEST19: JSR $C7E0
 ## Trabajos pendientes de ingeniería inversa
 
 Desempaquetar BGFONT para obtener una base relocalizable, seguir el flujo de DIR/LOAD/SAVE, identificar buffers DOS y asegurar que el helper no sea pisado. Investigar si es viable normalizar tipos de archivo exclusivamente en el lector o si se requiere usar lectura de cabeceras por separado.
+## TEST20 y TEST21 — resultado y nuevo filtro
+
+- **TEST20: FAIL funcional en VICE**, acceso al disco seguido de regreso a READY. La hipótesis de un helper sobrescrito en RAM todavía no fue demostrada; lo confirmado es que TEST19 y 20, ambos con JSR a helpers, fallan.
+- **TEST21: filtro inline de 11 bytes en $32E6**, basado en TEST18: `A5 32 49 56 C9 D7 90 03 4C 4F 51`, que equivale a `LDA $32; EOR #$56; CMP #$D7; BCC +3; JMP $514F`.
+- Tipos probados por simulación: acepta $81/$A1/$B1; rechaza $91/$82, DEL $80, USR $83, REL $84 y archivos abiertos comunes.
+- **Limitación documentada:** con solo 11 bytes esta comparación puede aceptar tipos especiales infrecuentes como $A2/$B2. No realiza verificación TX/CH. No anunciar compatibilidad universal todavía.
+- Se modificaron **6 bytes en el CRT de TEST21 respecto de TEST18**, incluyendo checksums. Sólo bancos 0 y 2. **PASS estructural; pendiente VICE**.
