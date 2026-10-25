@@ -11,7 +11,8 @@
 ## Fase 1 · Directorio BGFONT universal — TRABAJO ACTUAL
 - [x] A/B/C demuestra filtro de tipos de directorio.
 - [x] TEST18 demuestra visibilidad de SEQ $81 en BGFONT.
-- [ ] **TEST19 en VICE:** arrancar, mostrar $81/$A1/$B1 y ocultar $91/$82.
+- [x] **TEST19 en VICE: FAIL**; vuelve a BASIC al leer el directorio (sin PASS).
+- [ ] **TEST20 en VICE:** arranque, DIR con $81/$A1/$B1 visible y $91/$82 oculto, sin salir a BASIC.
 - [ ] Cargar sin corrupción BB6TEST.SEQ y BB6TEST.FONT desde D64 estándar.
 - [ ] Clasificar archivos estándar por cabeceras TX/CH para no mostrar sprites/otros SEQ.
 - [ ] Opcional: modo ALL FILES, claramente separado del filtro seguro.
