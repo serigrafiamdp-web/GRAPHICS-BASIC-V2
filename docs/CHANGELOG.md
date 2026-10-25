@@ -19,7 +19,8 @@
 ### Compatibilidad de BGFONT
 - TEST17: primer parche de filtro; falla control de integridad RAM por checksum no actualizado.
 - TEST18: checksums corregidos; BGFONT muestra BB6 estándar, pero incluye también otros SEQ.
-- TEST19: rutina auxiliar para filtrar sprites/PRG, **esperando resultado de VICE**.
+- TEST19: **FAIL en VICE**; durante DIR el editor accede al disco y vuelve a BASIC. El filtro JSR $C7E0 depende de RAM del cargador que no se garantiza durante BGFONT.
+- TEST20: versión experimental desde TEST18; instala filtro de 22 bytes en buffer de cassette $033C antes de arrancar BGFONT, con retorno preservando A/X/Y/P y checksum actualizado. **PASS estructural, pendiente VICE**. Sin tocar TEST13 ni editores ajenos.
 
 ### Decisiones
 - No usar un G64 montado en la disquetera para arrancar EPYX BASIC en el CRT.
