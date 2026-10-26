@@ -53,7 +53,7 @@ Con contenido idéntico `BB6TEST.SEQ` y `BB6TEST.FONT`, cada disco tiene un nomb
 
 Los recursos **no desaparecen físicamente** cuando no se muestran en la interfaz.
 
-En TEST18 se amplió el filtro: se ven SEQ normales, pero también recursos ajenos; TEST19 intenta filtrar tipos por el directorio, aún pendiente VICE.
+En TEST18 se amplió el filtro: se ven SEQ normales, pero también recursos ajenos. TEST19 y TEST20 **fallaron en VICE**. TEST21 resolvió el filtro de tipos sin rutinas auxiliares y quedó como **MASTER funcional** tras las pruebas de TEST26. Algunos archivos `.SPR` almacenados como SEQ `$81` siguen visibles; se decidió aceptar ese comportamiento y no introducir filtros por nombre tras los JAM de TEST22–25. `TEXT LOAD` permite recuperar en EPYX BASIC las pantallas guardadas con BGFONT.
 
 ## Problemas de integridad vistos en un D64 de proyecto
 
