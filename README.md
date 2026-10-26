@@ -5,7 +5,7 @@
 
 Objetivo: ejecutar EPYX BASIC, BGFONT y SPRITE desde un cartucho **EasyFlash** y dejar la **unidad 8 libre para guardar programas y recursos** en discos D64 estándar. La prioridad es compatibilidad de archivos, estabilidad y recuperación fiel de las herramientas originales; las optimizaciones llegarán después de pruebas reproducibles.
 
-> **Estado al 25 de octubre de 2026:** TEST13 es el prototipo de cartucho validado funcionalmente por el usuario; TEST18 confirmó en VICE que BGFONT puede listar SEQ normales, pero también muestra archivos ajenos; **TEST19 y TEST20 fallaron al leer DIR; TEST21, con filtro inline, está pendiente de VICE**. Ningún TEST experimental debe reemplazar la base estable.
+> **Estado al 25 de octubre de 2026:** **TEST21 queda como MASTER funcional**. Confirmados en VICE directorio, cargas, guardado/recarga de pantallas (TEST26), fuentes y recuperación mediante `TEXT LOAD` en EPYX BASIC. Los intentos TEST22–25 de ocultar .SPR fallaron o regresaron a BASIC y no forman parte del MASTER. Algunos .SPR siguen visibles por decisión aceptada. Se preservan TEST18 y TEST21 sin modificaciones.
 
 ## Menú de cuatro opciones
 
@@ -18,7 +18,7 @@ Objetivo: ejecutar EPYX BASIC, BGFONT y SPRITE desde un cartucho **EasyFlash** y
 
 | Documento | Contenido |
 | --- | --- |
-| [Estado y pruebas](docs/ESTADO_Y_TESTS.md) | Cronología TEST04–TEST21, PASS, FAIL y validación pendiente |
+| [Estado y pruebas](docs/ESTADO_Y_TESTS.md) | Cronología TEST04–TEST26, PASS, FAIL y validación en VICE |
 | [Arquitectura](docs/ARQUITECTURA_CARTUCHO.md) | EasyFlash, ROM/RAM, módulos, flujo de ejecución, disco |
 | [Mapa de memoria y parches](docs/MAPA_MEMORIA_Y_PARCHES.md) | Direcciones, rutinas, comprobaciones, cautelas |
 | [Discos y formatos](docs/DISCOS_Y_FORMATOS.md) | Directorio DOS, $81/$91/$A1/$B1, TX/CH, pruebas A/B/C |
@@ -26,6 +26,7 @@ Objetivo: ejecutar EPYX BASIC, BGFONT y SPRITE desde un cartucho **EasyFlash** y
 | [Ideas y features](docs/FEATURES_E_IDEAS.md) | Propuestas ordenadas y alcance |
 | [Fuentes y reproducción](docs/FUENTES_Y_REPRODUCCION.md) | Materiales de referencia, herramientas y reconstrucción |
 | [Historial](docs/CHANGELOG.md) | Decisiones y cambios conocidos |
+| [TEST26 PASS funcional](docs/TEST26_PASS_25_OCT_2026.md) | Registro definitivo de BGFONT SAVE/LOAD y EPYX BASIC TEXT LOAD |
 
 ## Principios
 
@@ -38,9 +39,9 @@ Objetivo: ejecutar EPYX BASIC, BGFONT y SPRITE desde un cartucho **EasyFlash** y
 
 **Nota sobre material original:** este repositorio contiene documentación técnica y pruebas propias. No se incluyen aquí imágenes/distribuciones de terceros ni ejecutables originales sin confirmar las autorizaciones correspondientes. Se preservan aparte con sus sumas SHA-256.
 
-## Estado del trabajo en curso
+## Estado validado y próxima etapa
 
-**TEST21**: filtro autocontenido de 11 bytes en BGFONT (sin JSR ni memoria externa). En las pruebas estructurales admite $81/$A1/$B1 y excluye $91/$82; algunos tipos especiales siguen siendo falsos positivos. **Sin PASS de VICE y sin comprobación de TX/CH**. TEST19 y TEST20 son FAIL funcionales; conservar TEST18 como referencia.
+**TEST21 / TEST26 PASS:** BGFONT funciona con directorios D64, carga y guarda pantallas y fuentes; EPYX BASIC recupera los fondos con `TEXT LOAD`. **El CRT TEST26 es byte a byte el mismo de TEST21.** El filtrado de .SPR se deja pendiente voluntariamente; evitar repetir los JAM de TEST22–25. Próximas pruebas: robustez SAVE/CLOSE, manejo de errores DOS y Sprite Editor. Ver [acta de PASS](docs/TEST26_PASS_25_OCT_2026.md).
 
 ---
 Repositorio: https://github.com/serigrafiamdp-web/GRAPHICS-BASIC-V2
