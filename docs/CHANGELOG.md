@@ -29,3 +29,16 @@
 - No alterar el SAVE ni el contenido binario de recursos durante experimentos del directorio.
 - Entregar futuro soporte de cualquier D64 1541 sin requerir CREATE/FORMAT especial.
 - Guardar mapas, decisiones, límites y pruebas en el repo, y distribuir binarios originales únicamente cuando corresponda legalmente.
+
+## 25 de octubre de 2026 — TEST21 congelado y TEST26 PASS
+
+- **TEST21**: PASS funcional en VICE para directorios, carga/guardado y filtrado de PRG normales. Algunos .SPR almacenados como SEQ $81 permanecen visibles (aceptado).
+- **TEST22**: FAIL JAM $D3C1 al incorporar filtro por nombre .SPR.
+- **TEST23B**: FAIL JAM $8F7D incluso con salto diagnóstico mínimo.
+- **TEST24**: FAIL; abandona BGFONT y vuelve a BASIC.
+- **TEST25**: FAIL JAM $8F7D; ampliar la copia hasta $8F55 no es solución segura.
+- **TEST26**: **PASS funcional** de SAVE/LOAD de pantallas y recursos sobre el CRT TEST21 **sin alteración de ROM**. El usuario confirma también `TEXT LOAD "NOMBRE.SCREEN",8` desde EPYX BASIC con representación correcta del fondo.
+- CRT compacto TEST21 MASTER: **435088 bytes**, SHA-256 `2e12f8109c11ac9133dc32c969e3ef5ccd00a04973be154cc531391ce6dd3f27`.
+- Conservación: CRT, disco de prueba y registro detallado en respaldo descargable; binarios de terceros no publicados en el repositorio sin verificación de permisos.
+
+Ver [acta TEST26 PASS](TEST26_PASS_25_OCT_2026.md).
