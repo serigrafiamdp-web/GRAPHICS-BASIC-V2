@@ -1,4 +1,4 @@
-# Estado de pruebas — 25-10-2026
+# Estado de pruebas — 25-10-2026 (actualizado tras TEST26 PASS)
 
 Este historial diferencia **simulación/estructura** de **PASS funcional en VICE comunicado por el usuario**. No asumir que un menú que aparece implica lectura o guardado correcto.
 
@@ -24,14 +24,20 @@ Este historial diferencia **simulación/estructura** de **PASS funcional en VICE
 | TEST18 | Actualizar XOR/SUM y conservar filtro amplio | Ambos BB6 aparecen incluso como $81; también salen sprites/otros SEQ | **PASS de listado ampliado**, NO de carga general |
 | TEST19 | Filtro por $81 / $A1 / $B1 con helper en $C7E0 | Tras acceder a disquetera desde DIR, abandona BGFONT y vuelve a BASIC (captura 25/10) | **FAIL funcional en VICE** | 
 | TEST20 | Filtro reubicado a $033C; instalado antes de arrancar BGFONT, base TEST18 | El editor activa la disquetera y regresa a READY durante DIR (captura 25/10) | **FAIL funcional en VICE** |
-| TEST21 | Filtro inline de 11 bytes en $32E6: EOR #$56, CMP #$D7, BCC; sin helpers | Pass estructural sobre TEST18, simulado con A/B/C; aún no probado realmente | **PENDIENTE VICE** |
+| TEST21 | Filtro inline de 11 bytes en $32E6, sin helpers | En VICE oculta PRG normales y conserva DIR, LOAD y SAVE; algunos sprites SEQ siguen visibles | **MASTER funcional** |
+
+| TEST22 | Filtro .SPR mediante código adicional | JAM en VICE $D3C1 | **FAIL** |
+| TEST23B | Salto mínimo de diagnóstico a $8F20 | JAM en VICE $8F7D | **FAIL** |
+| TEST24 | Carga extendida / salto diagnóstico | Regresa a BASIC | **FAIL** |
+| TEST25 | Intento solo .SPR, ampliando la región de copia | JAM en VICE $8F7D | **FAIL** |
+| TEST26 | Prueba funcional sobre CRT TEST21 sin modificaciones | Guarda/recarga .SCREEN, recursos y muestra pantalla mediante TEXT LOAD en EPYX BASIC | **PASS funcional reportado** |
 
 ## PASS que debemos preservar
 - **TEST13**: cartucho de cuatro opciones con EPYX BASIC desde ROM y SPRITE sin portada. No sustituirlo por tests experimentales.
 - **TEST16**: tres D64 de clasificación controlada con volúmenes diferentes; útiles para regresión.
 - **TEST18**: primera ampliación de BGFONT que demuestra visibilidad de SEQ normales. Mantener como referencia si TEST19 falla.
 
-## Resultado TEST19/20 y criterios para TEST21
+## Pruebas históricas de TEST19/20 y criterios de TEST21 (ya ejecutados)
 1. Reiniciar VICE completamente con el CRT de TEST21.
 2. Opción 1 debe seguir iniciando EPYX BASIC (regresión).
 3. Opción 2 debe iniciar BGFONT sin RAM CHECK FAILED ni JAM.
@@ -43,12 +49,11 @@ Este historial diferencia **simulación/estructura** de **PASS funcional en VICE
 9. Si vuelve a BASIC durante DIR, anotar la dirección o comportamiento; TEST21 no utiliza código en $033C ni $C7E0.
 10. El filtro inline es intencionalmente limitado: algunas clases especiales $A2/$B2 podrían mostrarse; NO confundir esto con validación de cabecera TX/CH.
 
-## Pruebas aún no demostradas
-- Que TEST21 filtre correctamente en VICE, sin depender de código auxiliar. TEST19 y TEST20 fallaron en VICE.
-- Que un SEQ $81 arbitrario con contenido incompatible sea rechazado por TX/CH (no implementado).
-- Que SAVE/LOAD sean fiables en discos recién formateados y que no generen *PRG.
-- Que SPRITE acepte y guarde recursos estándar de forma interoperable.
-- Que exista retorno limpio de los editores al menú del cartucho.
-- Que una compilación desde fuentes del repositorio reproduzca byte por byte los CRT históricos (se deben incorporar fuentes y artefactos autorizados por separado).
+## Límites aún no demostrados
+- El TEST26 PASS es una validación funcional en VICE comunicada por el usuario: no se recibió el D64 posterior a los guardados para comprobar el contenido byte por byte.
+- No se ha probado compatibilidad universal con **todo D64**, protección de escritura, disco lleno ni ciclos de 100 guardados.
+- Los archivos .SPR que comparten tipo SEQ $81 pueden seguir apareciendo; comportamiento aceptado.
+- No se ha validado aún el retorno limpio de editores al menú del cartucho ni todas las funciones de SPRITE.
+- Para evitar nuevos JAM, no reutilizar la zona $8F20 de las pruebas TEST22–25 sin análisis de RAM ejecutable.
 
-**Regla:** «PASS de listado» != «PASS de carga» != «PASS de guardado».
+**Acta definitiva:** [TEST26 PASS](TEST26_PASS_25_OCT_2026.md). **Regla:** «PASS de listado» != «PASS de carga» != «PASS de guardado»; la sesión confirmó las tres operaciones, con las limitaciones arriba.
