@@ -8,22 +8,23 @@
 - [ ] Depositar scripts de build propios y manifiestos versionados para builds reproducibles.
 - [ ] Definir política de distribución de los binarios originales en repositorio público.
 
-## Fase 1 · Directorio BGFONT universal — TRABAJO ACTUAL
+## Fase 1 · Directorio BGFONT compatible — BASE ESTABLE TEST21; mejoras opcionales pendientes
 - [x] A/B/C demuestra filtro de tipos de directorio.
 - [x] TEST18 demuestra visibilidad de SEQ $81 en BGFONT.
 - [x] **TEST19 en VICE: FAIL**; vuelve a BASIC al leer el directorio (sin PASS).
 - [x] **TEST20 en VICE: FAIL**; al acceder al directorio vuelve a BASIC.
-- [ ] **TEST21 en VICE:** prueba de filtro inline desde TEST18. Confirmar $81/$A1/$B1 visibles y $91/$82 ocultos sin salir a BASIC.
+- [x] **TEST21 en VICE:** filtro inline sobre TEST18; PRG normales ocultos, DIR y LOAD estables. Algunos sprites tipo SEQ $81 visibles (aceptado; no buscar filtrarlos ahora).
 - [ ] Validación posterior por cabeceras TX/CH: TEST21 podría admitir clases especiales $A2/$B2.
-- [ ] Cargar sin corrupción BB6TEST.SEQ y BB6TEST.FONT desde D64 estándar.
+- [x] Carga de recursos de BGFONT desde D64 estándar y comprobación funcional en VICE (TEST26); cotejo binario de disco modificado todavía pendiente.
 - [ ] Clasificar archivos estándar por cabeceras TX/CH para no mostrar sprites/otros SEQ.
 - [ ] Opcional: modo ALL FILES, claramente separado del filtro seguro.
 - [ ] Manejar discos cambiados sin caché persistente y confirmar unidad activa.
 
 **Aceptación:** BGFONT abre los dos BB6 en A/B/C, no lista tipos incompatibles en modo normal y conserva compatibilidad con recursos originales. Ningún cambio de formato/manual es obligatorio.
 
-## Fase 2 · Guardado robusto e interoperabilidad
-- [ ] SAVE en D64 nuevo, CLOSE correcto, examinar canal de estado 1541 y reabrir.
+## Fase 2 · Guardado robusto e interoperabilidad — PASS inicial TEST26
+- [x] **TEST26:** guardado y recarga de .SCREEN y recursos; en EPYX BASIC, `TEXT LOAD` muestra el fondo (PASS funcional comunicado).
+- [ ] Validar CLOSE correcto y canal de estado 1541 en fallos, disco lleno, discos de distintos orígenes y 100 ciclos.
 - [ ] Determinar por qué aparecen `*PRG` y evitar cadenas de sectores inacabadas.
 - [ ] Probar 100 guardados/recargas en copias de disco con comparación de bytes.
 - [ ] Nombres, sustitución segura, manejo de disco lleno y errores de escritura.
@@ -53,3 +54,4 @@
 
 ## Política de pruebas
 Cada TEST nuevo documenta: base, archivos, SHA-256, bytes/bancos cambiados, pasos en VICE, resultado, regresiones y decisión PASS/FAIL. Nunca declarar PASS de carga/guardado con solo una prueba de listado.
+**ACTUALIZACIÓN 25-10-2026:** [TEST26 PASS](TEST26_PASS_25_OCT_2026.md). TEST22–25 fallaron (JAM / retorno a BASIC); no se deben retomar para el MASTER. Evitar reabrir por ahora el filtro de `.SPR`.
